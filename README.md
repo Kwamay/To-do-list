@@ -17,9 +17,7 @@
   - [Prerequisites](#prerequisites)
   - [Install](#install)
   - [Usage](#usage)
-  - [Run tests](#run-tests)
-  - [Deployment](#deployment)
-- [👥 Authors](#authors)
+ - [👥 Authors](#authors)
 - [🔭 Future Features](#future-features)
 - [🤝 Contributing](#contributing)
 - [⭐️ Show your support](#support)
@@ -42,12 +40,18 @@
 > Tech Stack to be updated soon
 
 <details>
+  <summary>Version Control</summary>
+  <ul>
+    <li><a href="https://github.com/">GitHub</a></li>
+  </ul>
+</details>
+
+<details>
   <summary>Client</summary>
   <ul>
-    <li><a href="https://reactjs.org/">HTML</a></li>
-    <li><a href="https://reactjs.org/">CSS</a></li>
-    <li><a href="https://reactjs.org/">JavaScript</a></li>
-    <li><a href="https://reactjs.org/">Webpack</a></li>
+    <li><a href="https://www.w3.org/Style/CSS/Overview.en.html">CSS</a></li>
+    <li><a href="https://html.com/">HTML</a></li>
+    <li><a href="https://js.org/">Javascript</a></li>
   </ul>
 </details>
 
@@ -84,25 +88,17 @@ To setup this project, run this command:
 <!-- INSTALL -->
 ### Install
 
-Install this project with Iroko.
+This project doesn't require installation.
 
 ### Usage
 
 To run the project, execute the following command:
+Open index.html with a browser (Chrome, Firefox, Opera, Safari, or Edge)
 
-### Run tests
-> npm run test
-### Deployment
-
-You can deploy this project using:
->1.  Coming soon
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 <!-- AUTHORS -->
 ## 👥 Authors <a name="authors"></a>
 
-> Mention all of the collaborators of this project.
 
 👤 **Kenneth Adutwum**
 
