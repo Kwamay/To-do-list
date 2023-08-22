@@ -1,4 +1,3 @@
-<
 <!-- MAIN HEADING -->
 
   <h3><b>To Do List</b></h3>
@@ -111,8 +110,6 @@ Open index.html with a browser (Chrome, Firefox, Opera, Safari, or Edge)
 
 ## 🔭 Future Features <a name="future-features"></a>
 
-> Describe 1 - 3 features you will add to the project.
-
 - [ ] **Mark Tasks as Pending**
 - [ ] **Mark Tasks as Blocked**
 - [ ] **Add and Remove as Pending**
@@ -124,6 +121,8 @@ Open index.html with a browser (Chrome, Firefox, Opera, Safari, or Edge)
 ## 🤝 Contributing <a name="contributing"></a>
 
 Contributions, issues, and feature requests are welcome!
+
+Feel free to check the [issues page](https://github.com/Kwamay/To-do-list/issues)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -142,8 +141,6 @@ Contributions, issues, and feature requests are welcome!
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-<!-- FAQS -->
-## ❓ FAQ (OPTIONAL) <a name="faq"></a>
 
 - **How were the Linters utilised?**
 
