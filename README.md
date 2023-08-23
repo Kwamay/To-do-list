@@ -94,6 +94,11 @@ This project doesn't require installation.
 To run the project, execute the following command:
 Open index.html with a browser (Chrome, Firefox, Opera, Safari, or Edge)
 
+<!-- RUN Test -->
+
+To run test run the following commands
+npm i
+npm run dev
 
 <!-- AUTHORS -->
 ## 👥 Authors <a name="authors"></a>
