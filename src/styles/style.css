@@ -85,3 +85,7 @@ body {
 input[type="checkbox"] {
   margin-right: 1rem;
 }
+.trash {
+  cursor: pointer;
+  color: red;
+}
