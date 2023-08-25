@@ -1,12 +1,58 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>To Do List</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
     <script defer src="bundle.js"></script>
-<script defer src="bundleb49a0da14a2d2c138905.js"></script></head>
-<body>
-  <h3>Dont laugh challenge</h3>  
-</body>
+  <script defer src="bundlef6b6cdc949208b66269b.js"></script></head>
+  <body>
+    <body>
+      <div class="container">
+        <h1 class="header">
+          Today's To Do
+          <button class="btn"><span class="fa fa-refresh"></span></button>
+        </h1>
+
+        <div class="list-add">
+          <input
+            class="addtasks"
+            type="text"
+            id="newList"
+            placeholder="Add to your list..."
+          />
+          <span class="btn fa fa-plus" id="add-btn"></span>
+        </div>
+
+        <ul class="todo-list" id="list">
+          <div class="list-container">
+            <li class="list-item">
+              <input type="checkbox" />
+              Go to church
+            </li>
+            <i class="fas fa-ellipsis-v"></i>
+          </div>
+          <div class="list-container">
+            <li class="list-item">
+              <input type="checkbox" />
+              Time with friend
+            </li>
+            <i class="fas fa-ellipsis-v"></i>
+          </div>
+          <div class="list-container">
+            <li class="list-item">
+              <input type="checkbox" />
+              Chores
+            </li>
+            <i class="fas fa-ellipsis-v"></i>
+          </div>
+        </ul>
+        <button class="clear-button" id="clear">Clear all completed</button>
+      </div>
+    </body>
+  </body>
 </html>
