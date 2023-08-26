@@ -11,8 +11,10 @@
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   addTask: () => (/* binding */ addTask),
+/* harmony export */   checkedBox: () => (/* binding */ checkedBox),
 /* harmony export */   clearCompletedTasks: () => (/* binding */ clearCompletedTasks),
 /* harmony export */   editTask: () => (/* binding */ editTask),
+/* harmony export */   notChecked: () => (/* binding */ notChecked),
 /* harmony export */   populateTasks: () => (/* binding */ populateTasks),
 /* harmony export */   removeTask: () => (/* binding */ removeTask)
 /* harmony export */ });
@@ -21,15 +23,28 @@ var saveTasksToLocalStorage = function saveTasksToLocalStorage() {
   localStorage.setItem('tasks', JSON.stringify(tasks));
 };
 var populateTasks = function populateTasks() {
-  var listElement = document.createElement('ul');
-  listElement.className = 'todo-list';
-  tasks.forEach(function (task) {
+  var ulTag = document.getElementById('list');
+  while (ulTag.hasChildNodes()) {
+    ulTag.removeChild(ulTag.firstChild);
+  }
+  tasks.forEach(function (task, index) {
+    // <li>
+
     var listItem = document.createElement('li');
     listItem.className = 'list-item';
-    listItem.innerHTML = "\n        <input type=\"checkbox\" ".concat(task.completed ? 'checked' : '', ">\n        ").concat(task.description, "\n      ");
-    listElement.appendChild(listItem);
+    listItem.innerHTML = "\n        <input type=\"checkbox\" data-index=".concat(task.index, " class='check' id='check-").concat(index, "' ").concat(task.completed ? 'checked' : '', ">\n        <input type='text' id='editForm-").concat(task.index, "' class='item ").concat(task.completed ? 'strike' : '', "' value = ").concat(task.description, " data-index='").concat(task.index, "'>\n      ");
+
+    // <i>
+    var iTag = document.createElement('i');
+    iTag.className = 'fas fa-ellipsis-v';
+
+    // <div>
+    var divTag = document.createElement('div');
+    ulTag.appendChild(divTag);
+    divTag.className = 'list-container';
+    divTag.appendChild(listItem);
+    divTag.appendChild(iTag);
   });
-  document.getElementById('container').appendChild(listElement);
 };
 var addTask = function addTask(description) {
   var newTask = {
@@ -37,14 +52,14 @@ var addTask = function addTask(description) {
     completed: false,
     index: tasks.length + 1
   };
-  tasks.push(newTask);
+  tasks.unshift(newTask);
   saveTasksToLocalStorage();
   populateTasks();
 };
 var removeTask = function removeTask(index) {
-  tasks.splice(index - 1, 1);
+  tasks.splice(index, 1);
   tasks.forEach(function (task, idx) {
-    return task.index = idx + 1;
+    task.index = idx;
   });
   saveTasksToLocalStorage();
   populateTasks();
@@ -58,8 +73,23 @@ var clearCompletedTasks = function clearCompletedTasks() {
     return !task.completed;
   });
   tasks.forEach(function (task, idx) {
-    return task.index = idx + 1;
+    task.index = idx + 1;
   });
+  saveTasksToLocalStorage();
+  populateTasks();
+};
+var checkedBox = function checkedBox(taskIndex) {
+  var task = tasks.find(function (task) {
+    return task.index === +taskIndex;
+  });
+  task.completed = true;
+  saveTasksToLocalStorage();
+};
+var notChecked = function notChecked(taskIndex) {
+  var task = tasks.find(function (task) {
+    return task.index === +taskIndex;
+  });
+  task.completed = false;
   saveTasksToLocalStorage();
   populateTasks();
 };
@@ -172,7 +202,21 @@ ___CSS_LOADER_EXPORT___.push([module.id, `body {
 input[type="checkbox"] {
   margin-right: 1rem;
 }
-`, "",{"version":3,"sources":["webpack://./src/styles/style.css"],"names":[],"mappings":"AAEA;EACE,kCAAkC;EAClC,yBAAyB;EACzB,SAAS;EACT,UAAU;EACV,sBAAsB;AACxB;;AAEA;EACE,aAAa;EACb,sBAAsB;EACtB,UAAU;EACV,kBAAkB;EAClB,sBAAsB;EACtB,8CAA8C;EAC9C,uBAAuB;EACvB,aAAa;EACb,6BAA6B;AAC/B;;AAEA;EACE,aAAa;EACb,mBAAmB;EACnB,8BAA8B;EAC9B,mBAAmB;EACnB,eAAe;EACf,gBAAgB;EAChB,6BAA6B;AAC/B;;AAEA;EACE,aAAa;EACb,aAAa;EACb,6BAA6B;EAC7B,8BAA8B;AAChC;;AAEA;EACE,kBAAkB;EAClB,eAAe;EACf,aAAa;EACb,UAAU;EACV,YAAY;AACd;;AAEA;EACE,aAAa;EACb,sBAAsB;EACtB,WAAW;AACb;;AAEA;EACE,eAAe;EACf,gCAAgC;EAChC,WAAW;AACb;;AAEA;EACE,UAAU;EACV,aAAa;EACb,sBAAsB;AACxB;;AAEA;EACE,aAAa;EACb,8BAA8B;EAC9B,mBAAmB;EACnB,UAAU;EACV,6BAA6B;AAC/B;;AAEA;EACE,qBAAqB;EACrB,aAAa;EACb,WAAW;AACb;;AAEA;EACE,6BAA6B;EAC7B,YAAY;AACd;;AAEA;EACE,kBAAkB;AACpB","sourcesContent":["@import url(\"https://fonts.googleapis.com/css2?family=Crete+Round:ital@0;1&family=Inter:wght@100;200;300;400;500;600;700;800;900&family=Martel+Sans:wght@200;300;400;600;700;800;900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap\");\r\n\r\nbody {\r\n  font-family: \"Poppins\", sans-serif;\r\n  background-color: #f0f0f0;\r\n  margin: 0;\r\n  padding: 0;\r\n  box-sizing: border-box;\r\n}\r\n\r\n.container {\r\n  display: flex;\r\n  flex-direction: column;\r\n  width: 60%;\r\n  margin: 10rem auto;\r\n  border: 1px solid #ddd;\r\n  box-shadow: 0 2px 4px rgba(133, 128, 128, 0.4);\r\n  background-color: white;\r\n  padding: 10px;\r\n  border-bottom: 1px solid #ddd;\r\n}\r\n\r\n.header {\r\n  display: flex;\r\n  flex-direction: row;\r\n  justify-content: space-between;\r\n  align-items: center;\r\n  font-size: 25px;\r\n  font-weight: 300;\r\n  border-bottom: 1px solid #ccc;\r\n}\r\n\r\n.list-add {\r\n  display: flex;\r\n  padding: 10px;\r\n  border-bottom: 1px solid #ccc;\r\n  justify-content: space-between;\r\n}\r\n\r\n.addtasks {\r\n  font-style: italic;\r\n  font-size: 18px;\r\n  outline: none;\r\n  width: 90%;\r\n  border: none;\r\n}\r\n\r\n.clear-button {\r\n  padding: 10px;\r\n  background-color: #ccc;\r\n  color: #000;\r\n}\r\n\r\n.clear-button:hover {\r\n  cursor: pointer;\r\n  background-color: rgb(5, 184, 5);\r\n  color: #fff;\r\n}\r\n\r\n.todo-list {\r\n  padding: 0;\r\n  display: flex;\r\n  flex-direction: column;\r\n}\r\n\r\n.list-container {\r\n  display: flex;\r\n  justify-content: space-between;\r\n  align-items: center;\r\n  width: 98%;\r\n  border-bottom: 1px solid #ccc;\r\n}\r\n\r\n.list-item {\r\n  list-style-type: none;\r\n  padding: 12px;\r\n  width: auto;\r\n}\r\n\r\n.btn {\r\n  background-color: transparent;\r\n  border: none;\r\n}\r\n\r\ninput[type=\"checkbox\"] {\r\n  margin-right: 1rem;\r\n}\r\n"],"sourceRoot":""}]);
+
+.trash {
+  cursor: pointer;
+  color: red;
+}
+
+input {
+  border: none;
+}
+
+.strike {
+  text-decoration: line-through;
+  color: #a5a2a2;
+}
+`, "",{"version":3,"sources":["webpack://./src/styles/style.css"],"names":[],"mappings":"AAEA;EACE,kCAAkC;EAClC,yBAAyB;EACzB,SAAS;EACT,UAAU;EACV,sBAAsB;AACxB;;AAEA;EACE,aAAa;EACb,sBAAsB;EACtB,UAAU;EACV,kBAAkB;EAClB,sBAAsB;EACtB,8CAA8C;EAC9C,uBAAuB;EACvB,aAAa;EACb,6BAA6B;AAC/B;;AAEA;EACE,aAAa;EACb,mBAAmB;EACnB,8BAA8B;EAC9B,mBAAmB;EACnB,eAAe;EACf,gBAAgB;EAChB,6BAA6B;AAC/B;;AAEA;EACE,aAAa;EACb,aAAa;EACb,6BAA6B;EAC7B,8BAA8B;AAChC;;AAEA;EACE,kBAAkB;EAClB,eAAe;EACf,aAAa;EACb,UAAU;EACV,YAAY;AACd;;AAEA;EACE,aAAa;EACb,sBAAsB;EACtB,WAAW;AACb;;AAEA;EACE,eAAe;EACf,gCAAgC;EAChC,WAAW;AACb;;AAEA;EACE,UAAU;EACV,aAAa;EACb,sBAAsB;AACxB;;AAEA;EACE,aAAa;EACb,8BAA8B;EAC9B,mBAAmB;EACnB,UAAU;EACV,6BAA6B;AAC/B;;AAEA;EACE,qBAAqB;EACrB,aAAa;EACb,WAAW;AACb;;AAEA;EACE,6BAA6B;EAC7B,YAAY;AACd;;AAEA;EACE,kBAAkB;AACpB;;AAEA;EACE,eAAe;EACf,UAAU;AACZ;;AAEA;EACE,YAAY;AACd;;AAEA;EACE,6BAA6B;EAC7B,cAAc;AAChB","sourcesContent":["@import url(\"https://fonts.googleapis.com/css2?family=Crete+Round:ital@0;1&family=Inter:wght@100;200;300;400;500;600;700;800;900&family=Martel+Sans:wght@200;300;400;600;700;800;900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap\");\r\n\r\nbody {\r\n  font-family: \"Poppins\", sans-serif;\r\n  background-color: #f0f0f0;\r\n  margin: 0;\r\n  padding: 0;\r\n  box-sizing: border-box;\r\n}\r\n\r\n.container {\r\n  display: flex;\r\n  flex-direction: column;\r\n  width: 60%;\r\n  margin: 10rem auto;\r\n  border: 1px solid #ddd;\r\n  box-shadow: 0 2px 4px rgba(133, 128, 128, 0.4);\r\n  background-color: white;\r\n  padding: 10px;\r\n  border-bottom: 1px solid #ddd;\r\n}\r\n\r\n.header {\r\n  display: flex;\r\n  flex-direction: row;\r\n  justify-content: space-between;\r\n  align-items: center;\r\n  font-size: 25px;\r\n  font-weight: 300;\r\n  border-bottom: 1px solid #ccc;\r\n}\r\n\r\n.list-add {\r\n  display: flex;\r\n  padding: 10px;\r\n  border-bottom: 1px solid #ccc;\r\n  justify-content: space-between;\r\n}\r\n\r\n.addtasks {\r\n  font-style: italic;\r\n  font-size: 18px;\r\n  outline: none;\r\n  width: 90%;\r\n  border: none;\r\n}\r\n\r\n.clear-button {\r\n  padding: 10px;\r\n  background-color: #ccc;\r\n  color: #000;\r\n}\r\n\r\n.clear-button:hover {\r\n  cursor: pointer;\r\n  background-color: rgb(5, 184, 5);\r\n  color: #fff;\r\n}\r\n\r\n.todo-list {\r\n  padding: 0;\r\n  display: flex;\r\n  flex-direction: column;\r\n}\r\n\r\n.list-container {\r\n  display: flex;\r\n  justify-content: space-between;\r\n  align-items: center;\r\n  width: 98%;\r\n  border-bottom: 1px solid #ccc;\r\n}\r\n\r\n.list-item {\r\n  list-style-type: none;\r\n  padding: 12px;\r\n  width: auto;\r\n}\r\n\r\n.btn {\r\n  background-color: transparent;\r\n  border: none;\r\n}\r\n\r\ninput[type=\"checkbox\"] {\r\n  margin-right: 1rem;\r\n}\r\n\r\n.trash {\r\n  cursor: pointer;\r\n  color: red;\r\n}\r\n\r\ninput {\r\n  border: none;\r\n}\r\n\r\n.strike {\r\n  text-decoration: line-through;\r\n  color: #a5a2a2;\r\n}\r\n"],"sourceRoot":""}]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -700,50 +744,66 @@ var __webpack_exports__ = {};
   \**********************/
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _styles_style_css__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./styles/style.css */ "./src/styles/style.css");
-/* harmony import */ var _modules_operationFunctions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./modules/operationFunctions */ "./src/modules/operationFunctions.js");
+/* harmony import */ var _modules_operationFunctions_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./modules/operationFunctions.js */ "./src/modules/operationFunctions.js");
 
 
-
-// const tasks = [
-//   { description: 'Go to church', completed: false, index: 1 },
-//   { description: 'Time with friend', completed: true, index: 2 },
-//   { description: 'Chores', completed: false, index: 3 },
-// ];
 
 // Initialize tasks from local storage
-(0,_modules_operationFunctions__WEBPACK_IMPORTED_MODULE_1__.populateTasks)();
+(0,_modules_operationFunctions_js__WEBPACK_IMPORTED_MODULE_1__.populateTasks)();
 
 // Add task functionality
 document.getElementById('add-btn').addEventListener('click', function () {
-  var newTaskDescription = document.getElementById('newList').value;
-  if (newTaskDescription.trim() !== '') {
-    (0,_modules_operationFunctions__WEBPACK_IMPORTED_MODULE_1__.addTask)(newTaskDescription);
+  var newTaskDescription = document.getElementById('newList');
+  if (newTaskDescription.value.trim() !== '') {
+    (0,_modules_operationFunctions_js__WEBPACK_IMPORTED_MODULE_1__.addTask)(newTaskDescription.value);
+    newTaskDescription.value = '';
   }
 });
 
 // Delete task functionality
 document.getElementById('list').addEventListener('click', function (event) {
   if (event.target.classList.contains('fa-trash')) {
-    var taskIndex = event.target.getAttribute('data-index');
-    (0,_modules_operationFunctions__WEBPACK_IMPORTED_MODULE_1__.removeTask)(taskIndex);
+    var taskList = event.target.parentElement.childNodes[0];
+    var taskItem = taskList.querySelector('.item');
+    var taskIndex = taskItem.getAttribute('data-index');
+    (0,_modules_operationFunctions_js__WEBPACK_IMPORTED_MODULE_1__.removeTask)(taskIndex);
+  } else if (event.target.classList.contains('fa-ellipsis-v')) {
+    event.target.className = 'fas fa-trash trash';
+  } else if (event.target.classList.contains('check')) {
+    var idx = event.target.getAttribute('data-index');
+    event.target.addEventListener('change', function () {
+      var checkBoxInput = document.getElementById("editForm-".concat(idx));
+      if (event.target.checked) {
+        (0,_modules_operationFunctions_js__WEBPACK_IMPORTED_MODULE_1__.checkedBox)(idx);
+        // add strike class
+        checkBoxInput.classList.add('strike');
+      } else {
+        (0,_modules_operationFunctions_js__WEBPACK_IMPORTED_MODULE_1__.notChecked)(idx);
+        // remove stroke class
+        checkBoxInput.classList.remove('strike');
+      }
+    });
   }
 });
+function handleFocus(event) {
+  var inputValue = event.target.value;
+  var taskIndex = event.target.getAttribute('data-index');
+  var newDescription = inputValue.trim();
+  (0,_modules_operationFunctions_js__WEBPACK_IMPORTED_MODULE_1__.editTask)(taskIndex, newDescription);
+}
 
 // Edit task functionality
-document.getElementById('list').addEventListener('input', function (event) {
-  if (event.target.classList.contains('list-item')) {
-    var taskIndex = event.target.getAttribute('data-index');
-    var newDescription = event.target.textContent.trim();
-    (0,_modules_operationFunctions__WEBPACK_IMPORTED_MODULE_1__.editTask)(taskIndex, newDescription);
-  }
+var element = document.querySelectorAll('#editForm');
+element.forEach(function (el) {
+  el.addEventListener('focusout', handleFocus);
 });
 
 // Clear completed tasks
 document.getElementById('clear').addEventListener('click', function () {
-  (0,_modules_operationFunctions__WEBPACK_IMPORTED_MODULE_1__.clearCompletedTasks)();
+  (0,_modules_operationFunctions_js__WEBPACK_IMPORTED_MODULE_1__.clearCompletedTasks)();
 });
 })();
 
 /******/ })()
 ;
-//# sourceMappingURL=bundlef6b6cdc949208b66269b.js.map
+//# sourceMappingURL=bundlec125c5b37100b8b4c0ce.js.map

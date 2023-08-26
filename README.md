@@ -11,6 +11,7 @@
   - [🛠 Built With](#built-with)
     - [Tech Stack](#tech-stack)
     - [Key Features](#key-features)
+    - [🚀 Live Demo](#live-demo)
 - [💻 Getting Started](#getting-started)
   - [Setup](#setup)
   - [Prerequisites](#prerequisites)
@@ -60,6 +61,14 @@
 
 > - Added Webpack
 > - Build the UI
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+<!-- LIVE DEMO -->
+
+LIVE DEMO
+
+> Visit the [Live](https://kwamay.github.io/To-do-list/dist/) page of the Project.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
