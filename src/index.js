@@ -5,6 +5,8 @@ import {
   editTask,
   clearCompletedTasks,
   removeTask,
+  checkedBox,
+  notChecked,
 } from './modules/operationFunctions.js';
 
 // Initialize tasks from local storage
@@ -28,6 +30,20 @@ document.getElementById('list').addEventListener('click', (event) => {
     removeTask(taskIndex);
   } else if (event.target.classList.contains('fa-ellipsis-v')) {
     event.target.className = 'fas fa-trash trash';
+  } else if (event.target.classList.contains('check')) {
+    const idx = event.target.getAttribute('data-index');
+    event.target.addEventListener('change', () => {
+      const checkBoxInput = document.getElementById(`editForm-${idx}`);
+      if (event.target.checked) {
+        checkedBox(idx);
+        // add strike class
+        checkBoxInput.classList.add('strike');
+      } else {
+        notChecked(idx);
+        // remove stroke class
+        checkBoxInput.classList.remove('strike');
+      }
+    });
   }
 });
 

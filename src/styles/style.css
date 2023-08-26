@@ -94,3 +94,8 @@ input[type="checkbox"] {
 input {
   border: none;
 }
+
+.strike {
+  text-decoration: line-through;
+  color: #a5a2a2;
+}
