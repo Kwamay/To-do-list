@@ -1,5 +1,4 @@
 let tasks = JSON.parse(localStorage.getItem('tasks')) || [];
-const inverseTasks = tasks.reverse();
 
 const saveTasksToLocalStorage = () => {
   localStorage.setItem('tasks', JSON.stringify(tasks));
@@ -11,15 +10,17 @@ const populateTasks = () => {
     ulTag.removeChild(ulTag.firstChild);
   }
 
-  inverseTasks.forEach((task) => {
+  tasks.forEach((task, index) => {
     // <li>
 
     const listItem = document.createElement('li');
 
     listItem.className = 'list-item';
     listItem.innerHTML = `
-        <input type="checkbox" ${task.completed ? 'checked' : ''}>
-        <input type='text' id='editForm' class='item' value = ${
+        <input type="checkbox" data-index=${task.index} class='check' id='check-${index}' ${
+  task.completed ? 'checked' : ''
+}>
+        <input type='text' id='editForm-${task.index}' class='item ${task.completed ? 'strike' : ''}' value = ${
   task.description
 } data-index='${task.index}'>
       `;
@@ -38,21 +39,15 @@ const populateTasks = () => {
   });
 };
 
-function clearForm() {
-  // Replace 'myForm' with the actual ID of your form element
-  document.getElementById('newList');
-}
-
 const addTask = (description) => {
   const newTask = {
     description,
     completed: false,
     index: tasks.length + 1,
   };
-  tasks.push(newTask);
+  tasks.unshift(newTask);
   saveTasksToLocalStorage();
   populateTasks();
-  clearForm();
 };
 
 const removeTask = (index) => {
@@ -80,6 +75,18 @@ const clearCompletedTasks = () => {
   populateTasks();
 };
 
+const checkedBox = (taskIndex) => {
+  const task = tasks.find((task) => task.index === +taskIndex);
+  task.completed = true;
+  saveTasksToLocalStorage();
+};
+
+const notChecked = (taskIndex) => {
+  const task = tasks.find((task) => task.index === +taskIndex);
+  task.completed = false;
+  saveTasksToLocalStorage();
+  populateTasks();
+};
 export {
-  populateTasks, addTask, removeTask, editTask, clearCompletedTasks,
+  populateTasks, addTask, removeTask, editTask, clearCompletedTasks, checkedBox, notChecked,
 };
